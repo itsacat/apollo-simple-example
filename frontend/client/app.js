@@ -11,6 +11,10 @@ import Layout from './../server/src/Layout';
 
 const networkInterface = createNetworkInterface({
     uri: 'http://localhost:3001/graphql',
+    opts: {
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+    },
 });
 
 const client = new ApolloClient({

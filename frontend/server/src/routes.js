@@ -1,25 +1,18 @@
 import React from 'react'
-import TestPageWithData from './components/TestPage'
-
-class AnotherPage extends React.Component {
-    render() {
-        return (
-            <div>AnotherPage</div>
-        )
-    }
-}
+import MainPageWithData from './components/MainPage'
+import AnotherPageWithData from './components/AnotherPage'
 
 const routes = [
     {
         path: '/',
-        name: 'home',
+        name: 'main',
         exact: true,
-        component: TestPageWithData,
+        component: MainPageWithData,
     },
     {
         path: '/another',
         name: 'another',
-        component: AnotherPage,
+        component: AnotherPageWithData,
     },
 ];
 export default routes;

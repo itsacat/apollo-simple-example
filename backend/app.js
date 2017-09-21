@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import {graphqlExpress} from 'apollo-server-express';
 import { makeExecutableSchema } from 'graphql-tools';
 import lodash from 'lodash';
+import cors from 'cors';
 
 const typeDefs = `
   type Post {
@@ -22,6 +23,7 @@ const posts = [
     {id: 1, description: 'Two', nextId: 'rnd'},
     {id: 2, description: 'Three'},
     {id: 3, description: 'Four'},
+    {id: 4, description: 'Five'},
 ];
 
 const resolvers = {
@@ -54,7 +56,7 @@ export const schema = makeExecutableSchema({
 
 const PORT = 3001;
 
-const app = express();
+const app = express().use('*', cors());
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({schema: schema}));
 

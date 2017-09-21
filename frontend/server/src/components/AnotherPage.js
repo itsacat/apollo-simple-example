@@ -1,46 +1,38 @@
 import React from 'react'
-import Post1 from '../components/Post1'
+import Post4 from '../components/Post4'
 import {gql, graphql} from 'react-apollo'
 
-class TestPage extends React.Component {
+class AnotherPage extends React.Component {
     render() {
-        console.log('Component TestPage: render');
+        console.log('Component AnotherPage: render');
 
         if (this.props.data.loading) {
             return (<div>Loading</div>)
         }
 
-        // let rows = [];
-        // for (let i = 0; i < 10000; i++) {
-        //     rows.push(<div key={i}>TEST</div>);
-        // }
-
         return (
             <div>
+                <h1>MainPage</h1>
                 <div>
-                    <Post1
+                    <Post4
                         key={this.props.data.post.id}
                         post={this.props.data.post}
                     />
                 </div>
-
-                {/*{rows}*/}
             </div>
         )
     }
 }
 
-
 const FirstQuery = gql`
     query getPost {
-        post(id: 0) {
+        post(id: 4) {
             id
-            description,
-            nextId
+            description
         }
     }
 `;
 
-const TestPageWithData = graphql(FirstQuery)(TestPage);
+const AnotherPageWithData = graphql(FirstQuery)(AnotherPage);
 
-export default TestPageWithData;
+export default AnotherPageWithData;

@@ -16,7 +16,10 @@ global.fetch = fetch;
 
 const serverApp = new Express();
 
-serverApp.get('/', (req, res) => {
+serverApp.get('/', main);
+serverApp.get('/another', main);
+
+function main(req, res) {
     console.log('');
     console.log('');
     console.log('=======================================');
@@ -44,25 +47,9 @@ serverApp.get('/', (req, res) => {
         res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(html)}`);
         res.end();
     });
-});
+}
 
 serverApp.use('/static', Express.static('public'));
-
-/*
-ReactDOM.render(
-    <ApolloProvider client={client}>
-        <Router>
-            <div>
-                <Route exact path='/' component={ListPage}/>
-                <Route path='/create' component={CreatePage}/>
-                <Route path='/post/:id' component={DetailPage}/>
-            </div>
-        </Router>
-    </ApolloProvider>,
-    document.getElementById('root'),
-)
-*/
-
 
 function createAndConfigureNetworkInterface(req) {
     let networkInterface = createNetworkInterface({
