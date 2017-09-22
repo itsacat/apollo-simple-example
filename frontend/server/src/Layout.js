@@ -8,10 +8,10 @@ const Layout = () =>
         <nav>
             <ul>
                 <li>
-                    <Link to="/">MainPage</Link>
+                    <Link to="/">Users</Link>
                 </li>
                 <li>
-                    <Link to="/another">AnotherPage</Link>
+                    <Link to="/films">Films</Link>
                 </li>
             </ul>
         </nav>

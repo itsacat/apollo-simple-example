@@ -2,7 +2,7 @@ let nodeExternals = require('webpack-node-externals');
 
 
 module.exports = {
-    entry: "./app.js",
+    entry: "./src/app.js",
     output: {
         filename: "bundle.js"
     },
@@ -13,7 +13,8 @@ module.exports = {
                 // exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {
-                    presets: ['react', 'es2015']
+                    presets: ['react', 'es2015'],
+                    plugins: ["transform-async-to-generator"]
                 }
             }
         ]
