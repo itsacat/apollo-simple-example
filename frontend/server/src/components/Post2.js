@@ -2,6 +2,7 @@ import React from 'react'
 import {gql, graphql} from 'react-apollo'
 import Post3 from '../components/Post3'
 import Post4 from '../components/Post4'
+import {fetchPolicy} from './../gqlOptions'
 
 class Post2 extends React.Component {
 
@@ -58,7 +59,8 @@ const data = {
         return {
             variables: {
                 id: props.post.nextId
-            }
+            },
+            fetchPolicy: fetchPolicy
         }
     }
 };

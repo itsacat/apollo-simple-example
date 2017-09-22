@@ -88,7 +88,7 @@ function createAndConfigureNetworkInterface(req) {
 function createAndConfigureApollo(networkInterface) {
     return new ApolloClient({
         ssrMode: true,
-        networkInterface: networkInterface,
+        networkInterface: networkInterface
     });
 }
 

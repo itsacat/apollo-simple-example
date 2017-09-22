@@ -1,6 +1,7 @@
 import React from 'react'
 import Post1 from '../components/Post1'
 import {gql, graphql} from 'react-apollo'
+import {gqlOptions} from './../gqlOptions'
 
 class MainPage extends React.Component {
     render() {
@@ -42,6 +43,9 @@ const FirstQuery = gql`
     }
 `;
 
-const MainPageWithData = graphql(FirstQuery)(MainPage);
+const MainPageWithData = graphql(FirstQuery, gqlOptions)(MainPage);
 
 export default MainPageWithData;
+
+
+

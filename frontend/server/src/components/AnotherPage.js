@@ -1,18 +1,20 @@
 import React from 'react'
 import Post4 from '../components/Post4'
 import {gql, graphql} from 'react-apollo'
+import {gqlOptions} from './../gqlOptions'
 
 class AnotherPage extends React.Component {
     render() {
         console.log('Component AnotherPage: render');
 
         if (this.props.data.loading) {
+            // console.log('Loading');
             return (<div>Loading</div>)
         }
 
         return (
             <div>
-                <h1>MainPage</h1>
+                <h1>AnotherPage</h1>
                 <div>
                     <Post4
                         key={this.props.data.post.id}
@@ -33,6 +35,6 @@ const FirstQuery = gql`
     }
 `;
 
-const AnotherPageWithData = graphql(FirstQuery)(AnotherPage);
+const AnotherPageWithData = graphql(FirstQuery, gqlOptions)(AnotherPage);
 
 export default AnotherPageWithData;

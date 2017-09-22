@@ -13,13 +13,37 @@ const networkInterface = createNetworkInterface({
     uri: 'http://localhost:3001/graphql',
     opts: {
         credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json' },
-    },
+        headers: { 'Content-Type': 'application/json' }
+    }
 });
+
+
+networkInterface.use([{
+    applyMiddleware(req, next) {
+        // console.log('');
+        // console.log('===COMPONENT===');
+        // console.log('Middleware. request:');
+        // console.log(req);
+        // console.log('');
+        next();
+    }
+}]);
+
+networkInterface.useAfter([{
+    applyAfterware(response, next) {
+        // console.log('Afterware. response:');
+        // console.log(response.response.json);
+        // console.log('');
+        next();
+    }
+}]);
 
 const client = new ApolloClient({
     networkInterface,
-    initialState: window.__APOLLO_STATE__
+    ssrMode: true,
+    initialState: window.__APOLLO_STATE__,
+    ssrForceFetchDelay: 100,
+    connectToDevTools: true
 });
 
 ReactDOM.render(

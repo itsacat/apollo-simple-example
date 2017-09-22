@@ -1,6 +1,7 @@
 import React from 'react'
 import {gql, graphql} from 'react-apollo'
 import Post2 from '../components/Post2'
+import {fetchPolicy} from './../gqlOptions'
 
 
 class Post1 extends React.Component {
@@ -37,13 +38,12 @@ const FirstQuery = gql`
 `;
 
 const data = {
-    options: (props) => {
-        return {
-            variables: {
-                id: props.post.nextId
-            }
-        }
-    }
+    options: (props) => ({
+        variables: {
+            id: props.post.nextId
+        },
+        fetchPolicy: fetchPolicy
+    })
 };
 
 const PostWithMutation = graphql(FirstQuery, data)(Post1);

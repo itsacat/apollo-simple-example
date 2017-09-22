@@ -43,7 +43,7 @@ const resolvers = {
                     } else {
                         resolve(post);
                     }
-                }, 0);
+                }, 300);
             });
         }
     }
