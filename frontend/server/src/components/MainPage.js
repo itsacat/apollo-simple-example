@@ -7,7 +7,7 @@ class MainPage extends React.Component {
     render() {
         console.log('Component MainPage: render');
 
-        if (this.props.data.loading) {
+        if (this.props.data.post === undefined) {
             return (<div>Loading</div>)
         }
 

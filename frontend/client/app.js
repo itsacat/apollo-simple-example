@@ -42,7 +42,7 @@ const client = new ApolloClient({
     networkInterface,
     ssrMode: true,
     initialState: window.__APOLLO_STATE__,
-    ssrForceFetchDelay: 100,
+    // ssrForceFetchDelay: 100,
     connectToDevTools: true
 });
 

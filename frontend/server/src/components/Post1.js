@@ -8,7 +8,7 @@ class Post1 extends React.Component {
     render() {
         console.log('Component Post1: render');
 
-        if (this.props.data.loading) {
+        if (this.props.data.post === undefined) {
             return (<div>Loading</div>)
         }
 

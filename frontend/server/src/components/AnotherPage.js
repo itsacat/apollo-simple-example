@@ -7,7 +7,7 @@ class AnotherPage extends React.Component {
     render() {
         console.log('Component AnotherPage: render');
 
-        if (this.props.data.loading) {
+        if (this.props.data.post === undefined) {
             // console.log('Loading');
             return (<div>Loading</div>)
         }

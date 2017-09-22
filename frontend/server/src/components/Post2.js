@@ -5,13 +5,10 @@ import Post4 from '../components/Post4'
 import {fetchPolicy} from './../gqlOptions'
 
 class Post2 extends React.Component {
-
-
-
     render() {
         console.log('Component Post2: render');
 
-        if (this.props.data.loading) {
+        if (this.props.data.post === undefined) {
             return (<div>Loading</div>)
         }
 
