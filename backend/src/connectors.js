@@ -25,10 +25,19 @@ const FilmModel = sequelize.define('film', {
 
 // Relations
 UserModel.belongsToMany(FilmModel, {through: 'userToFilm'});
+FilmModel.belongsToMany(UserModel, {through: 'userToFilm'});
 
 
 let COUNT_OF_USERS = 3;
 let COUNT_OF_FILMS = 10;
+let MIN_COUNT_OF_FILMS_IN_USER = 2;
+let MAX_COUNT_OF_FILMS_IN_USER = 10;
+
+// let COUNT_OF_USERS = 1;
+// let COUNT_OF_FILMS = 1;
+// let MIN_COUNT_OF_FILMS_IN_USER = 1;
+// let MAX_COUNT_OF_FILMS_IN_USER = 1;
+
 
 const addDataToDB = async () => {
     await sequelize.sync({force: true});
@@ -53,7 +62,9 @@ const createUsers = async () => {
         });
 
 
-        let numberOfFilmsInUser = lodash.random(1, 10);
+        let numberOfFilmsInUser = lodash.random(
+            MIN_COUNT_OF_FILMS_IN_USER, MAX_COUNT_OF_FILMS_IN_USER
+        );
         let filmsId = lodash.range(1, COUNT_OF_FILMS + 1);
 
         let promises = lodash.times(numberOfFilmsInUser, async () => {

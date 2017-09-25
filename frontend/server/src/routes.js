@@ -1,18 +1,18 @@
 import React from 'react'
-import MainPageWithData from './components/UserPage'
-import AnotherPageWithData from './components/AnotherPage'
+import {UsersPageWithData} from './components/UsersPage'
+import {FilmsPageWithData} from './components/FilmsPage'
 
 const routes = [
     {
         path: '/',
         name: 'main',
         exact: true,
-        component: MainPageWithData,
+        component: UsersPageWithData,
     },
     {
-        path: '/another',
-        name: 'another',
-        component: AnotherPageWithData,
+        path: '/films',
+        name: 'films',
+        component: FilmsPageWithData,
     },
 ];
 export default routes;

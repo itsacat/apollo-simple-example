@@ -2,6 +2,7 @@ const typeDefs = `
   type Query {
     post(id: Int): Post
     users: [User]
+    films: [Film]
   }
   
   
@@ -14,6 +15,7 @@ const typeDefs = `
   type Film {
     id: ID!,
     name: String,
+    usersCount: Int,
     users: [User]
   }
   

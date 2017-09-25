@@ -17,7 +17,7 @@ global.fetch = fetch;
 const serverApp = new Express();
 
 serverApp.get('/', main);
-serverApp.get('/another', main);
+serverApp.get('/films', main);
 
 function main(req, res) {
     console.log('');

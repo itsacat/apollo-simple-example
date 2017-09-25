@@ -6,15 +6,19 @@ import {User, Film} from './connectors';
 const resolvers = {
     Query: {
         post: queryPost,
-        users: queryUsers
+        users: queryUsers,
+        films: queryFilms
     },
     User: getUser(),
     Film: getFilm(),
 };
 
-
 function queryUsers(obj, args, context, info) {
     return User.findAll();
+}
+
+function queryFilms(obj, args, context, info) {
+    return Film.findAll();
 }
 
 function getUser() {
@@ -27,9 +31,12 @@ function getUser() {
 
 function getFilm() {
     return {
-        users(film){
-            console.log('beep');
+        users(film) {
             return film.getUsers();
+        },
+        async usersCount(film) {
+            let users = await film.getUsers();
+            return users.length;
         },
     }
 }
