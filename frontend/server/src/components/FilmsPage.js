@@ -1,12 +1,13 @@
-import React from 'react'
-import {gql, graphql} from 'react-apollo'
-import {gqlOptions} from './../gqlOptions'
+import React from 'react';
+import {gql, graphql} from 'react-apollo';
+import {gqlOptions} from './../gqlOptions';
+import {Link} from 'react-router-dom';
 
 class FilmsPage extends React.Component {
     createFilm(film, index) {
         return (
             <div key={index}>
-                <span>{film.name}</span>
+                <span><Link to={`/film/${film.id}`}>{film.name}</Link></span>
                 <span> (likes: {film.usersCount})</span>
             </div>
         );
@@ -36,7 +37,7 @@ class FilmsPage extends React.Component {
 }
 
 
-const FirstQuery = gql`
+const FilmsQuery = gql`
     query getFilms {
         films {
             id
@@ -50,6 +51,6 @@ const FirstQuery = gql`
     }
 `;
 
-const FilmsPageWithData = graphql(FirstQuery, gqlOptions)(FilmsPage);
+const FilmsPageWithData = graphql(FilmsQuery, gqlOptions)(FilmsPage);
 
 export {FilmsPageWithData};

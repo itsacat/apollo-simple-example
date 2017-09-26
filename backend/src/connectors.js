@@ -20,6 +20,9 @@ const UserModel = sequelize.define('user', {
 const FilmModel = sequelize.define('film', {
     name: {
         type: Sequelize.STRING,
+    },
+    description: {
+        type: Sequelize.STRING,
     }
 });
 
@@ -49,7 +52,8 @@ const addDataToDB = async () => {
 const createFilms = async () => {
     let promises = await lodash.times(COUNT_OF_FILMS, async () => {
         await FilmModel.create({
-            name: casual.title
+            name: casual.title,
+            description: casual.sentences(10),
         })
     });
     await Promise.all(promises);

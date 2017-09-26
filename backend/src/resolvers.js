@@ -5,9 +5,10 @@ import {User, Film} from './connectors';
 
 const resolvers = {
     Query: {
-        post: queryPost,
         users: queryUsers,
-        films: queryFilms
+        films: queryFilms,
+        film: queryFilm,
+        user: queryUser,
     },
     User: getUser(),
     Film: getFilm(),
@@ -21,6 +22,14 @@ function queryFilms(obj, args, context, info) {
     return Film.findAll();
 }
 
+function queryFilm(obj, args, context, info) {
+    return Film.findById(args.id);
+}
+
+function queryUser(obj, args, context, info) {
+    return User.findById(args.id);
+}
+
 function getUser() {
     return {
         films(user){
@@ -30,6 +39,8 @@ function getUser() {
 }
 
 function getFilm() {
+    // Если запросить users и usersCount, то film.getUsers() вызовится 2 раза.
+    // Так, что надо аккуратно писать эти штуки.
     return {
         users(film) {
             return film.getUsers();
@@ -39,33 +50,6 @@ function getFilm() {
             return users.length;
         },
     }
-}
-
-const posts = [
-    {id: 0, description: 'One', nextId: 1},
-    {id: 1, description: 'Two', nextId: 'rnd'},
-    {id: 2, description: 'Three'},
-    {id: 3, description: 'Four'},
-    {id: 4, description: 'Five'},
-];
-
-function queryPost(obj, args, context, info) {
-    console.log('Request', args.id);
-
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            let post = posts[args.id];
-            if (post.nextId === 'rnd') {
-                resolve({
-                    id: post.id,
-                    description: post.description,
-                    nextId: lodash.random(2, 3)
-                });
-            } else {
-                resolve(post);
-            }
-        }, 300);
-    });
 }
 
 

@@ -1,13 +1,15 @@
 import React from 'react'
-import Post1 from '../components/Post1'
 import {gql, graphql} from 'react-apollo'
 import {gqlOptions} from './../gqlOptions'
+import {Link} from "react-router-dom";
 
 class UsersPage extends React.Component {
     createUser(user, index) {
         return (
             <div key={index}>
-                <span><a>{user.name}</a></span>
+                <span>
+                    <Link to={`/user/${user.id}`}>{user.name}</Link>
+                </span>
                 <span> films: </span>
                 <span>
                     {user.films.map((film, index) => {
@@ -44,13 +46,8 @@ class UsersPage extends React.Component {
 }
 
 
-const FirstQuery = gql`
-    query getPost {
-        post(id: 0) {
-            id
-            description
-            nextId
-        },
+const UsersQuery = gql`
+    query getUsers {
         users {
             id
             name
@@ -62,7 +59,7 @@ const FirstQuery = gql`
     }
 `;
 
-const UsersPageWithData = graphql(FirstQuery, gqlOptions)(UsersPage);
+const UsersPageWithData = graphql(UsersQuery, gqlOptions)(UsersPage);
 
 export {UsersPageWithData};
 

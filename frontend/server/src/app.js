@@ -18,6 +18,8 @@ const serverApp = new Express();
 
 serverApp.get('/', main);
 serverApp.get('/films', main);
+serverApp.get('/film/:id', main);
+serverApp.get('/user/:id', main);
 
 function main(req, res) {
     console.log('');

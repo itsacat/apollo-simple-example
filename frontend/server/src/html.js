@@ -8,7 +8,7 @@ function Html({content, state}) {
         <script dangerouslySetInnerHTML={{
             __html: `window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')};`,
         }}/>
-        <script src='./static/clientBundle.js'/>
+        <script src='/static/clientBundle.js'/>
         </body>
         </html>
     );

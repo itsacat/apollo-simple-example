@@ -1,7 +1,7 @@
 import React from 'react';
 import routes from './routes';
-import { Link } from 'react-router-dom';
-import { renderRoutes } from 'react-router-config';
+import {Link} from 'react-router-dom';
+import {renderRoutes} from 'react-router-config';
 
 const Layout = () =>
     <div>
