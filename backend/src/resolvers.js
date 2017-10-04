@@ -8,10 +8,13 @@ const resolvers = {
         users: queryUsers,
         films: queryFilms,
         film: queryFilm,
-        user: queryUser,
+        user: queryUser
+    },
+    Mutation: {
+        createUser: createUser
     },
     User: getUser(),
-    Film: getFilm(),
+    Film: getFilm()
 };
 
 function queryUsers(obj, args, context, info) {
@@ -34,8 +37,8 @@ function getUser() {
     return {
         films(user){
             return user.getFilms();
-        },
-    }
+        }
+    };
 }
 
 function getFilm() {
@@ -48,8 +51,12 @@ function getFilm() {
         async usersCount(film) {
             let users = await film.getUsers();
             return users.length;
-        },
-    }
+        }
+    };
+}
+
+function createUser(root, args) {
+    return User.create(args);
 }
 
 

@@ -18,6 +18,10 @@ const PORT = 3001;
 
 const app = express().use('*', cors());
 
+// app.use((request, responce, next) => {
+//     setTimeout(next, 3000);
+// });
+
 app.use('/graphql', bodyParser.json(), graphqlExpress({schema: schema}));
 
 app.listen(PORT, () => console.log(

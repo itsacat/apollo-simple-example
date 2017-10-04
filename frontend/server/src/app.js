@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import ReactDOMServer from 'react-dom/server'
 import {getDataFromTree} from "react-apollo"
 import {
