@@ -1,5 +1,5 @@
 import React from 'react'
-import {gql, graphql} from 'react-apollo'
+import {gql, graphql, compose} from 'react-apollo'
 import {gqlOptions} from './../gqlOptions'
 import {Link} from "react-router-dom";
 
@@ -95,7 +95,7 @@ class UsersPage extends React.Component {
                 const data = store.readQuery({query: getUsers});
 
                 // Добавление films - это грязный хак. Без него всё рушится. Надо понять почему.
-                createUser.films = [];
+                // createUser.films = [];
 
                 data.users.push(createUser);
                 store.writeQuery({query: getUsers, data});
@@ -127,11 +127,17 @@ const createUser = gql`
         ) {
             id
             name
+            films {
+                id
+                name
+            }
         }
     }
 `;
 
-let UsersPageWithData = graphql(createUser, { name: 'createLinkMutation' })(UsersPage);
-UsersPageWithData = graphql(getUsers, gqlOptions)(UsersPageWithData);
+const UsersPageWithData = compose(
+    graphql(createUser, { name: 'createLinkMutation' }),
+    graphql(getUsers, gqlOptions),
+)(UsersPage);
 
 export {UsersPageWithData};
