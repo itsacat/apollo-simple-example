@@ -10,12 +10,15 @@ module.exports = {
         loaders: [
             {
                 test: [/\.js$/, /\.es6$/],
-                // exclude: /node_modules/,
+                exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {
-                    presets: ['react', 'es2015', /*'stage-0'*/],
-                    plugins: ["transform-async-to-generator"]
-                    // plugins: ['transform-decorators-legacy']
+                    presets: ['react', 'es2015', 'stage-2'],
+                    plugins: [
+                        'transform-runtime',
+                        'transform-async-to-generator',
+                        // 'transform-decorators-legacy',
+                    ]
                 }
             }
         ]

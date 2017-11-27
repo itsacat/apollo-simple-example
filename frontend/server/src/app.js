@@ -1,17 +1,21 @@
 import 'babel-polyfill';
 import ReactDOMServer from 'react-dom/server'
 import {getDataFromTree} from "react-apollo"
-import {
-    ApolloClient,
-    createNetworkInterface,
-    ApolloProvider
-} from 'react-apollo';
+import {ApolloProvider} from 'react-apollo';
 import Express from 'express';
 import {StaticRouter} from 'react-router';
-import Layout from './Layout';
+import {Layout} from '../../client/src/components/Layout';
 import Html from './html';
 import React from 'react'
 import fetch from 'node-fetch'
+import {createAndConfigureReduxStore}
+    from "../../client/src/store/createAndConfigureReduxStore";
+
+import {ApolloClient} from 'apollo-client';
+import {HttpLink} from 'apollo-link-http';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import {Provider} from 'react-redux';
+
 
 global.fetch = fetch;
 
@@ -28,9 +32,10 @@ function main(req, res) {
     console.log('=======================================');
     console.log('Frontick request');
 
-    const networkInterface = createAndConfigureNetworkInterface(req);
-    const apolloClient = createAndConfigureApollo(networkInterface);
-    const clientApp = createAndConfigureClientApp(req, apolloClient);
+    // const networkInterface = createAndConfigureNetworkInterface(req);
+    const apolloClient = createAndConfigureApollo(req);
+    const reduxStore = createAndConfigureReduxStore();
+    const clientApp = createAndConfigureClientApp(req, apolloClient, reduxStore);
 
     console.log('getDataFromTree start');
     // console.time('getDataFromTree');
@@ -44,8 +49,12 @@ function main(req, res) {
         console.log('renderToString finish');
         // console.timeEnd('renderToString');
 
-        const initialState = {'apollo': apolloClient.getInitialState()};
-        const html = <Html content={content} state={initialState}/>;
+        const initialApolloState = apolloClient.cache.extract();
+        const initialReduxState = reduxStore.getState();
+
+        const html = <Html content={content}
+                           initialApolloState={initialApolloState}
+                           initialReduxState={initialReduxState}/>;
         res.status(200);
         res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(html)}`);
         res.end();
@@ -54,55 +63,34 @@ function main(req, res) {
 
 serverApp.use('/static', Express.static('public'));
 
-function createAndConfigureNetworkInterface(req) {
-    let networkInterface = createNetworkInterface({
+
+function createAndConfigureApollo(req) {
+    const link = new HttpLink({
         uri: 'http://localhost:3001/graphql',
-        opts: {
-            credentials: 'same-origin',
-            headers: {
-                cookie: req.header('Cookie'),
-            },
+        credentials: 'same-origin',
+        headers: {
+            cookie: req.header('Cookie'),
         },
     });
 
-    networkInterface.use([{
-        applyMiddleware(req, next) {
-            // console.log('');
-            // console.log('===COMPONENT===');
-            // console.log('Middleware. request:');
-            // console.log(req);
-            // console.log('');
-            next();
-        }
-    }]);
-
-    networkInterface.useAfter([{
-        applyAfterware(response, next) {
-            // console.log('Afterware. response:');
-            // console.log(response.response.json);
-            // console.log('');
-            next();
-        }
-    }]);
-
-    return networkInterface;
-}
-
-function createAndConfigureApollo(networkInterface) {
     return new ApolloClient({
-        ssrMode: true,
-        networkInterface: networkInterface
+        link,
+        cache: new InMemoryCache(),
+        ssrMode: true
     });
 }
 
-function createAndConfigureClientApp(req, apolloClient) {
+function createAndConfigureClientApp(req, apolloClient, reduxStore) {
     const context = {};
+
 
     return (
         <ApolloProvider client={apolloClient}>
-            <StaticRouter location={req.url} context={context}>
-                <Layout/>
-            </StaticRouter>
+            <Provider store={reduxStore}>
+                <StaticRouter location={req.url} context={context}>
+                    <Layout/>
+                </StaticRouter>
+            </Provider>
         </ApolloProvider>
     );
 }

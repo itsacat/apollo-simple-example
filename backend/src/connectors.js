@@ -3,7 +3,7 @@ import casual from 'casual';
 import lodash from 'lodash';
 
 
-casual.seed(123);
+// casual.seed(123);
 
 
 const sequelize = new Sequelize('userfilms', null, null, {

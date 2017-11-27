@@ -1,9 +1,8 @@
 import React from 'react';
-import {gql, graphql} from 'react-apollo';
-import {gqlOptions} from './../gqlOptions';
 import {Link} from 'react-router-dom';
 
-class FilmsPage extends React.Component {
+
+class FilmsPageView extends React.Component {
     createFilm(film, index) {
         return (
             <div key={index}>
@@ -37,20 +36,4 @@ class FilmsPage extends React.Component {
 }
 
 
-const FilmsQuery = gql`
-    query getFilms {
-        films {
-            id
-            name
-            usersCount,
-            users {
-                id,
-                name
-            }
-        }
-    }
-`;
-
-const FilmsPageWithData = graphql(FilmsQuery, gqlOptions)(FilmsPage);
-
-export {FilmsPageWithData};
+export {FilmsPageView};
