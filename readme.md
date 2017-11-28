@@ -6,6 +6,15 @@
 ```bash
 cd backend
 npm i
+node_modules/.bin/webpack
+ctrl + c
+node bundle.js
+```
+
+#### frontend server
+```bash
+cd frontend/server
+npm i
 webpack
 ctrl + c
 node bundle.js
@@ -16,13 +25,4 @@ node bundle.js
 cd frontend/client
 npm i
 webpack
-```
-
-#### frontend server
-```bash
-cd frontend/server
-npm i
-webpack
-ctrl + c
-node bundle.js
 ```
